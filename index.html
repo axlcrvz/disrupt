@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISRUPT - The Marketing Revolution Starts Here</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: #0a0a0a;
+        color: #ffffff;
+        overflow-x: hidden;
+        line-height: 1.6;
+        letter-spacing: -0.01em;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+      }
+
+      /* Header */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 1000;
+        padding: 2rem 0;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 3rem;
+      }
+
+      .nav-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        letter-spacing: -0.01em;
+      }
+
+      .nav-links a:hover {
+        color: #ffffff;
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.03) 0%, #0a0a0a 70%);
+      }
+
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+        animation: subtle-pulse 8s ease-in-out infinite alternate;
+      }
+
+      @keyframes subtle-pulse {
+        0% {
+          opacity: 0.5;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 1000px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 900;
+        margin-bottom: 2rem;
+        animation: slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        color: #ffffff;
+        letter-spacing: -0.03em;
+        line-height: 0.9;
+      }
+
+      .hero .subtitle {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+        margin-bottom: 3rem;
+        opacity: 0.8;
+        animation: slideInUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+      }
+
+      @keyframes slideInUp {
+        from {
+          opacity: 0;
+          transform: translateY(60px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Enemy Section */
+      .enemy-section {
+        padding: 120px 0;
+        background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+        text-align: center;
+      }
+
+      .enemy-section h2 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 2rem;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+
+      .enemy-section p {
+        font-size: 1.4rem;
+        opacity: 0.7;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .enemy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+      }
+
+      .enemy-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 3rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .enemy-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+      }
+
+      .enemy-card h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .enemy-card p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      /* Success Section */
+      .success-section {
+        padding: 120px 0;
+        background: #0a0a0a;
+      }
+
+      .success-section h2 {
+        text-align: center;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 4rem;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+
+      .success-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .stat-number {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .stat-card p {
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+      }
+
+      /* Vague Message Section */
+      .vague-section {
+        padding: 120px 0;
+        background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+        text-align: center;
+      }
+
+      .vague-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .vague-section h2 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 3rem;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+
+      .vague-text {
+        font-size: 1.3rem;
+        line-height: 1.7;
+        opacity: 0.8;
+        margin-bottom: 2rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+      }
+
+      /* Rage Bait Section */
+      .rage-section {
+        padding: 120px 0;
+        background: #0a0a0a;
+        text-align: center;
+      }
+
+      .rage-content {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .rage-section h2 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 2rem;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+
+      .rage-section>p {
+        font-size: 1.4rem;
+        margin-bottom: 3rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+      }
+
+      .controversy-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .controversy-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border-left: 3px solid rgba(255, 255, 255, 0.8);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        backdrop-filter: blur(10px);
+      }
+
+      .controversy-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      .controversy-card h3 {
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .controversy-card p {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+      }
+
+      /* Meeting Section */
+      .meeting-section {
+        padding: 120px 0;
+        background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+        text-align: center;
+      }
+
+      .meeting-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .meeting-section h2 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        margin-bottom: 2rem;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+      }
+
+      .meeting-section>div>p {
+        font-size: 1.4rem;
+        margin-bottom: 3rem;
+        opacity: 0.8;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 400;
+      }
+
+      .meeting-benefits {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+      }
+
+      .benefit-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 3rem;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .benefit-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+      }
+
+      .benefit-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        display: block;
+      }
+
+      .benefit-card h3 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .benefit-card p {
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+      }
+
+      .meeting-urgency {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2.5rem;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        margin: 4rem 0;
+        backdrop-filter: blur(15px);
+      }
+
+      .meeting-urgency h3 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .meeting-urgency p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+      }
+
+      .meeting-form {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 4rem;
+        border-radius: 24px;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin: 4rem 0;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .meeting-form h3 {
+        margin-bottom: 3rem;
+        color: #ffffff;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      .form-group {
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.8rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.95rem;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 16px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        font-size: 1rem;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .form-group textarea {
+        height: 120px;
+        resize: vertical;
+      }
+
+      /* CTA Buttons */
+      .cta-button {
+        display: inline-block;
+        padding: 18px 36px;
+        background: #ffffff;
+        color: #0a0a0a;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        margin: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        font-family: 'Inter', sans-serif;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
+      }
+
+      .cta-button.secondary {
+        background: transparent;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .cta-button.secondary:hover {
+        border-color: #ffffff;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .cta-button.large {
+        padding: 22px 44px;
+        font-size: 1.1rem;
+      }
+
+      /* Footer */
+      footer {
+        padding: 80px 0;
+        background: #0a0a0a;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      footer h2 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      footer p {
+        color: rgba(255, 255, 255, 0.7);
+        margin: 1rem 0;
+      }
+
+      footer .final-text {
+        margin-top: 3rem;
+        opacity: 0.5;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 20px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .meeting-form {
+          padding: 2.5rem;
+        }
+
+        .enemy-grid,
+        .controversy-grid,
+        .meeting-benefits {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Floating elements - more subtle */
+      .floating-element {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 50%;
+        animation: float 8s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      .floating-element:nth-child(1) {
+        width: 120px;
+        height: 120px;
+        top: 15%;
+        left: 8%;
+        animation-delay: 0s;
+      }
+
+      .floating-element:nth-child(2) {
+        width: 80px;
+        height: 80px;
+        top: 65%;
+        right: 12%;
+        animation-delay: 3s;
+      }
+
+      .floating-element:nth-child(3) {
+        width: 160px;
+        height: 160px;
+        bottom: 15%;
+        left: 15%;
+        animation-delay: 6s;
+      }
+
+      @keyframes float {
+
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+          transform: translateY(-30px) rotate(180deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <header>
+      <nav class="container">
+        <div class="logo">DISRUPT</div>
+        <ul class="nav-links">
+          <li>
+            <a href="#home">Home</a>
+          </li>
+          <li>
+            <a href="#services">Services</a>
+          </li>
+          <li>
+            <a href="#success">Success</a>
+          </li>
+          <li>
+            <a href="#meeting">Meeting</a>
+          </li>
+          <li>
+            <a href="#contact">Contact</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <h1>BREAK THE SYSTEM</h1>
+          <p class="subtitle">Revolutionary marketing that transforms everything</p>
+          <a href="#contact" class="cta-button">Start Revolution</a>
+          <a href="#services" class="cta-button secondary">Discover More</a>
+        </div>
+      </section>
+      <section class="enemy-section" id="enemy">
+        <div class="container">
+          <h2>TIRED OF BEING IGNORED?</h2>
+          <p>Traditional marketing agencies are keeping you trapped in mediocrity</p>
+          <div class="enemy-grid">
+            <div class="enemy-card">
+              <h3>🏢 Corporate Dinosaurs</h3>
+              <p>Stuck in 2010 strategies while your competitors dominate with cutting-edge tactics they'll never understand.</p>
+            </div>
+            <div class="enemy-card">
+              <h3>💸 Budget Vampires</h3>
+              <p>Bleeding your marketing budget dry with zero accountability and vague "brand awareness" promises.</p>
+            </div>
+            <div class="enemy-card">
+              <h3>📊 Report Factories</h3>
+              <p>Drowning you in meaningless metrics while your actual sales and growth stagnate month after month.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="success-section" id="success">
+        <div class="container">
+          <h2>PROVEN RESULTS THAT MATTER</h2>
+          <div class="success-stats">
+            <div class="stat-card">
+              <div class="stat-number">847%</div>
+              <p>Average ROI Increase</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">92</div>
+              <p>Brands Transformed</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">$2.4M</div>
+              <p>Revenue Generated</p>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">24hrs</div>
+              <p>Average Response Time</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="vague-section" id="services">
+        <div class="container">
+          <div class="vague-content">
+            <h2>THE TRANSFORMATION AWAITS</h2>
+            <p class="vague-text"> We don't just do marketing - we orchestrate paradigm shifts. Through our proprietary methodology, we unlock hidden potential and catalyze exponential growth using advanced psychological frameworks and cutting-edge neural marketing principles that most agencies don't even know exist. </p>
+            <p class="vague-text"> Our holistic approach transcends traditional boundaries, creating synergistic ecosystems that amplify your brand's authentic voice while leveraging quantum marketing dynamics for unprecedented market penetration and customer acquisition acceleration. </p>
+            <a href="#contact" class="cta-button">Unlock Your Potential</a>
+          </div>
+        </div>
+      </section>
+      <section class="rage-section" id="controversy">
+        <div class="container">
+          <div class="rage-content">
+            <h2>THE TRUTH THEY DON'T WANT YOU TO KNOW</h2>
+            <p>Marketing "gurus" are lying to you. Here's what they're hiding...</p>
+            <div class="controversy-grid">
+              <div class="controversy-card">
+                <h3>🤥 The SEO Myth</h3>
+                <p>"Just create good content" is the biggest lie in marketing. While you're blogging into the void, smart brands are using psychological triggers that convert 10x better.</p>
+              </div>
+              <div class="controversy-card">
+                <h3>🎯 Social Media Scam</h3>
+                <p>Posting pretty pictures won't save your business. 99% of social media "strategies" are just expensive ways to waste time and money.</p>
+              </div>
+              <div class="controversy-card">
+                <h3>💰 Ad Spend Trap</h3>
+                <p>Throwing money at Facebook ads without understanding consumer psychology is like gambling with your company's future. Most agencies don't care - they get paid either way.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="meeting-section" id="meeting">
+        <div class="container">
+          <div class="meeting-content">
+            <h2>STRATEGY BREAKTHROUGH SESSION</h2>
+            <p>Get a personalized roadmap to marketing domination in just 45 minutes</p>
+            <div class="meeting-benefits">
+              <div class="benefit-card">
+                <span class="benefit-icon">🔍</span>
+                <h3>Business Audit</h3>
+                <p>We'll analyze your current marketing and identify the hidden profit leaks costing you thousands every month.</p>
+              </div>
+              <div class="benefit-card">
+                <span class="benefit-icon">🎯</span>
+                <h3>Custom Strategy</h3>
+                <p>Walk away with a tailored action plan designed specifically for your industry and target market.</p>
+              </div>
+              <div class="benefit-card">
+                <span class="benefit-icon">⚡</span>
+                <h3>Quick Wins</h3>
+                <p>Discover 3-5 tactics you can implement immediately to see results within the next 30 days.</p>
+              </div>
+            </div>
+            <div class="meeting-urgency">
+              <h3>⏰ Limited Availability</h3>
+              <p>We only take 5 new strategy sessions per week. Most clients see 200%+ growth within 90 days, but spots fill up fast.</p>
+            </div>
+            <div class="meeting-form">
+              <h3>Book Your Strategy Session</h3>
+              <form>
+                <div class="form-group">
+                  <label for="name">Full Name *</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address *</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="company">Company Name *</label>
+                  <input type="text" id="company" name="company" required>
+                </div>
+                <div class="form-group">
+                  <label for="revenue">Monthly Revenue *</label>
+                  <select id="revenue" name="revenue" required>
+                    <option value="">Select Range</option>
+                    <option value="0-10k">$0 - $10,000</option>
+                    <option value="10k-50k">$10,000 - $50,000</option>
+                    <option value="50k-100k">$50,000 - $100,000</option>
+                    <option value="100k-500k">$100,000 - $500,000</option>
+                    <option value="500k+">$500,000+</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="challenge">Biggest Marketing Challenge</label>
+                  <textarea id="challenge" name="challenge" placeholder="What's your #1 marketing frustration right now?"></textarea>
+                </div>
+                <button type="submit" class="cta-button large" style="width: 100%;"> CLAIM MY STRATEGY SESSION </button>
+              </form>
+            </div>
+            <p style="font-size: 0.9rem; opacity: 0.6; margin-top: 1rem;"> 🔒 Your information is 100% secure. We hate spam as much as you do. </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer id="contact">
+      <div class="container">
+        <h2>READY TO DISRUPT?</h2>
+        <p>Join the marketing revolution. Transform your business forever.</p>
+        <a href="mailto:hello@disruptmarketing.com" class="cta-button">Start Your Revolution</a>
+        <p class="final-text"> © 2025 DISRUPT Marketing Agency. All rights reserved. <br> The revolution starts now. </p>
+      </div>
+    </footer>
+    <script>
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+      // Header background on scroll
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 100) {
+          header.style.background = 'rgba(10, 10, 10, 0.95)';
+        } else {
+          header.style.background = 'rgba(10, 10, 10, 0.85)';
+        }
+      });
+      // Animate stats on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+              const finalValue = stat.textContent;
+              const isPercentage = finalValue.includes('%');
+              const isCurrency = finalValue.includes(');
+              const isTime = finalValue.includes('hrs');
+              let numericValue = parseInt(finalValue.replace(/[^\d]/g, ''));
+              let currentValue = 0;
+              const increment = numericValue / 60;
+              const countUp = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= numericValue) {
+                  currentValue = numericValue;
+                  clearInterval(countUp);
+                }
+                let displayValue = Math.floor(currentValue);
+                if (isPercentage) displayValue += '%';
+                if (isCurrency) displayValue = ' + (displayValue / 10).toFixed(1) + 'M';
+                if (isTime) displayValue += 'hrs';
+                stat.textContent = displayValue;
+              }, 40);
+            });
+          }
+        });
+      }, observerOptions);
+      const successSection = document.querySelector('.success-section');
+      if (successSection) {
+        observer.observe(successSection);
+      }
+      // Form submission handler
+      // Replace the existing form submission handler in your HTML with this code
+      // Configuration - Replace with your Google Apps Script Web App URL
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx-R2hQLKW202Rf-XeqhuyZpnnwF_fn78aEKxQhnAo8_vFZT3VUXPaBPDq19S7WZbRa/exec';
+      // Enhanced form submission handler with Google Sheets integration
+      document.querySelector('.meeting-form form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        // Get form data
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData);
+        // Validate required fields
+        const requiredFields = ['name', 'email', 'company', 'revenue'];
+        const missingFields = requiredFields.filter(field => !data[field] || data[field].trim() === '');
+        if (missingFields.length > 0) {
+          alert(`Please fill in the following required fields: ${missingFields.join(', ')}`);
+          return;
+        }
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.email)) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        // Update button state
+        submitButton.textContent = 'SUBMITTING...';
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.6';
+        try {
+          // Send data to Google Apps Script
+          const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            mode: 'cors'
+          });
+          const result = await response.json();
+          if (result.success) {
+            // Success - show confirmation message
+            showSuccessMessage();
+            this.reset();
+            // Optional: Track conversion (if using analytics)
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'conversion', {
+                'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL', // Replace with your conversion tracking
+                'value': 1.0,
+                'currency': 'USD'
+              });
+            }
+            // Optional: Facebook Pixel tracking
+            if (typeof fbq !== 'undefined') {
+              fbq('track', 'Lead');
+            }
+          } else {
+            throw new Error(result.message || 'Form submission failed');
+          }
+        } catch (error) {
+          console.error('Form submission error:', error);
+          showErrorMessage(error.message);
+        } finally {
+          // Reset button state
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+          submitButton.style.opacity = '1';
+        }
+      });
+      /**
+       * Show success message to user
+       */
+      function showSuccessMessage() {
+        // Create success modal/message
+        const successModal = document.createElement('div');
+        successModal.className = 'success-modal';
+        successModal.innerHTML = `
+        
+									<div class="success-modal-content">
+										<div class="success-icon">✅</div>
+										<h3>Strategy Session Booked!</h3>
+										<p>Thank you for your submission. We'll contact you within 24 hours to schedule your breakthrough session.</p>
+										<p>
+											<strong>Next Steps:</strong>
+										</p>
+										<ul>
+											<li>Check your email for confirmation</li>
+											<li>Add our meeting to your calendar</li>
+											<li>Prepare your marketing questions</li>
+										</ul>
+										<button onclick="closeSuccessModal()" class="cta-button">Got It!</button>
+									</div>
+									<div class="modal-overlay" onclick="closeSuccessModal()"></div>
+    `;
+        // Add modal styles
+        const modalStyles = `
+        
+									<style>
+            .success-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .modal-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(10px);
+            }
+            .success-modal-content {
+                background: #0a0a0a;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 20px;
+                padding: 3rem;
+                max-width: 500px;
+                margin: 0 20px;
+                text-align: center;
+                position: relative;
+                z-index: 10001;
+                backdrop-filter: blur(20px);
+            }
+            .success-icon {
+                font-size: 4rem;
+                margin-bottom: 1rem;
+            }
+            .success-modal-content h3 {
+                color: #ffffff;
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                font-weight: 600;
+            }
+            .success-modal-content p {
+                color: rgba(255, 255, 255, 0.8);
+                margin-bottom: 1rem;
+                line-height: 1.6;
+            }
+            .success-modal-content ul {
+                text-align: left;
+                color: rgba(255, 255, 255, 0.7);
+                margin-bottom: 2rem;
+                padding-left: 1.5rem;
+            }
+            .success-modal-content li {
+                margin-bottom: 0.5rem;
+            }
+        </style>
+    `;
+        document.head.insertAdjacentHTML('beforeend', modalStyles);
+        document.body.appendChild(successModal);
+        // Animate in
+        setTimeout(() => {
+          successModal.style.opacity = '1';
+        }, 100);
+      }
+      /**
+       * Show error message to user
+       */
+      function showErrorMessage(errorMessage) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerHTML = `
+        
+									<div class="error-content">
+										<span class="error-icon">⚠️</span>
+										<p>Oops! Something went wrong: ${errorMessage}</p>
+										<p>Please try again or email us directly at 
+											<a href="mailto:hello@disruptmarketing.com">hello@disruptmarketing.com</a>
+										</p>
+									</div>
+    `;
+        // Add error styles
+        const errorStyles = `
+        
+									<style>
+            .error-message {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(220, 38, 38, 0.9);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                backdrop-filter: blur(10px);
+                z-index: 10000;
+                max-width: 400px;
+                box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+                animation: slideInRight 0.3s ease-out;
+            }
+            .error-content {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .error-icon {
+                font-size: 1.2rem;
+                flex-shrink: 0;
+            }
+            .error-message p {
+                margin: 0 0 0.5rem 0;
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+            .error-message a {
+                color: #fecaca;
+                text-decoration: underline;
+            }
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        </style>
+    `;
+        document.head.insertAdjacentHTML('beforeend', errorStyles);
+        document.body.appendChild(errorDiv);
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+          errorDiv.remove();
+        }, 8000);
+        // Add click to dismiss
+        errorDiv.addEventListener('click', () => {
+          errorDiv.remove();
+        });
+      }
+      /**
+       * Close success modal
+       */
+      function closeSuccessModal() {
+        const modal = document.querySelector('.success-modal');
+        if (modal) {
+          modal.remove();
+        }
+      }
+      /**
+       * Optional: Form validation with real-time feedback
+       */
+      function addRealTimeValidation() {
+        const form = document.querySelector('.meeting-form form');
+        const inputs = form.querySelectorAll('input[required], select[required]');
+        inputs.forEach(input => {
+          input.addEventListener('blur', function() {
+            validateField(this);
+          });
+          input.addEventListener('input', function() {
+            clearFieldError(this);
+          });
+        });
+      }
+
+      function validateField(field) {
+        const value = field.value.trim();
+        const fieldName = field.name;
+        // Remove existing error
+        clearFieldError(field);
+        if (!value) {
+          showFieldError(field, 'This field is required');
+          return false;
+        }
+        if (fieldName === 'email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(value)) {
+            showFieldError(field, 'Please enter a valid email address');
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function showFieldError(field, message) {
+        field.style.borderColor = '#dc2626';
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.textContent = message;
+        errorDiv.style.cssText = `
+        color: #dc2626;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+        display: block;
+    `;
+        field.parentNode.appendChild(errorDiv);
+      }
+
+      function clearFieldError(field) {
+        field.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        const existingError = field.parentNode.querySelector('.field-error');
+        if (existingError) {
+          existingError.remove();
+        }
+      }
+      // Initialize real-time validation when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        addRealTimeValidation();
+      });
+      // Add subtle parallax effect to floating elements
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        const rate2 = scrolled * -0.3;
+        const rate3 = scrolled * -0.7;
+        const floatingElements = document.querySelectorAll('.floating-element');
+        if (floatingElements[0]) floatingElements[0].style.transform = `translateY(${rate}px)`;
+        if (floatingElements[1]) floatingElements[1].style.transform = `translateY(${rate2}px)`;
+        if (floatingElements[2]) floatingElements[2].style.transform = `translateY(${rate3}px)`;
+      });
+    </script>
+  </body>
+</html>
