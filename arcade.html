@@ -1,0 +1,355 @@
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0a0a;padding:30px 16px;font-family:'Inter',system-ui,sans-serif;">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap');
+
+  .wrap { display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+  .frame {
+    position:relative;
+    width:380px;
+    height:560px;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 0 0 2px #1c1c1c, 0 30px 60px -20px rgba(0,0,0,0.85);
+    background:#0a0a0a;
+  }
+
+  canvas { display:block; width:100%; height:100%; }
+
+  .hud {
+    position:absolute; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    padding:14px 16px;
+    pointer-events:none;
+  }
+
+  .hud-block { text-align:left; }
+  .hud-label {
+    font-size:9px; letter-spacing:0.22em; color:#9c9c9c; text-transform:uppercase; font-weight:800;
+  }
+  .hud-value {
+    font-family:'Bebas Neue',sans-serif; font-size:26px; color:#fff; line-height:1;
+  }
+  .hud-value.green { color:#C6FF00; }
+  .hud-right { text-align:right; }
+
+  .overlay {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    background:rgba(10,10,10,0.86);
+    padding:0 30px;
+  }
+  .overlay .eyebrow {
+    font-size:11px; letter-spacing:0.24em; color:#C6FF00; text-transform:uppercase; font-weight:800; margin-bottom:8px;
+  }
+  .overlay h1 {
+    font-family:'Bebas Neue',sans-serif; font-size:44px; color:#fff; margin:0 0 6px; text-transform:uppercase; line-height:1;
+  }
+  .overlay p { font-size:13px; color:#9c9c9c; margin:0 0 20px; max-width:260px; }
+  .overlay .stat { font-family:'Bebas Neue',sans-serif; font-size:20px; color:#C6FF00; margin-bottom:22px; }
+  .btn {
+    font-family:'Inter',sans-serif; font-weight:800; font-size:12px; letter-spacing:0.12em;
+    background:#C6FF00; color:#0a0a0a; border:none; padding:12px 26px; border-radius:4px;
+    cursor:pointer; text-transform:uppercase;
+  }
+  .btn:hover { opacity:0.85; }
+  .hint { margin-top:12px; font-size:10px; color:#555; letter-spacing:0.05em; }
+</style>
+
+<div class="wrap">
+  <div class="frame" id="frame">
+    <canvas id="game" width="380" height="560"></canvas>
+    <div class="hud">
+      <div class="hud-block">
+        <div class="hud-label">Views</div>
+        <div class="hud-value green" id="score">0</div>
+      </div>
+      <div class="hud-block hud-right">
+        <div class="hud-label">Best</div>
+        <div class="hud-value" id="best">0</div>
+      </div>
+    </div>
+    <div class="overlay" id="overlay">
+      <div class="eyebrow">We Disrupt Arcade</div>
+      <h1>Algorithm<br>Run</h1>
+      <p>Jump the shadowbans, grab the views, ride the hooks. One bad flop and it's over.</p>
+      <button class="btn" id="startBtn">Start Run</button>
+    </div>
+  </div>
+  <div class="hint">Space / Tap / Click to jump &nbsp;·&nbsp; hold to jump higher</div>
+</div>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const GROUND_Y = H - 90;
+  const GREEN = '#C6FF00';
+
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const overlay = document.getElementById('overlay');
+  const startBtn = document.getElementById('startBtn');
+
+  let best = 0;
+  let state = 'idle'; // idle | playing | dead
+
+  let player, obstacles, orbs, particles, groundOffset, speed, spawnTimer, orbTimer, score, gravity, hookActive, hookTimer;
+
+  function resetGame(){
+    player = { x: 70, y: GROUND_Y - 40, w: 34, h: 40, vy: 0, onGround: true, jumpHeld: false };
+    obstacles = [];
+    orbs = [];
+    particles = [];
+    groundOffset = 0;
+    speed = 4.2;
+    spawnTimer = 60;
+    orbTimer = 40;
+    score = 0;
+    gravity = 0.62;
+    hookActive = false;
+    hookTimer = 0;
+  }
+
+  function jump(){
+    if (state !== 'playing') return;
+    if (player.onGround){
+      player.vy = -11;
+      player.onGround = false;
+      player.jumpHeld = true;
+      spawnBurst(player.x+player.w/2, player.y+player.h, 6);
+    }
+  }
+  function releaseJump(){ player.jumpHeld = false; }
+
+  function spawnBurst(x,y,n){
+    for (let i=0;i<n;i++){
+      particles.push({ x, y, vx:(Math.random()-0.5)*3, vy:-Math.random()*3, life:20, color: GREEN });
+    }
+  }
+
+  function spawnObstacle(){
+    const type = Math.random() < 0.3 ? 'tall' : 'low';
+    if (type === 'low'){
+      obstacles.push({ x: W+20, y: GROUND_Y-26, w: 26, h: 26, type });
+    } else {
+      obstacles.push({ x: W+20, y: GROUND_Y-52, w: 22, h: 52, type });
+    }
+  }
+
+  function spawnOrb(){
+    const y = GROUND_Y - 60 - Math.random()*70;
+    orbs.push({ x: W+20, y, r: 9, taken:false });
+  }
+
+  function rectsOverlap(a,b){
+    return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+  }
+
+  function update(){
+    if (state !== 'playing') return;
+
+    speed += 0.0022;
+    groundOffset = (groundOffset + speed) % 40;
+
+    // player physics
+    if (!player.onGround){
+      const g = player.jumpHeld ? gravity*0.72 : gravity;
+      player.vy += g;
+      player.y += player.vy;
+      if (player.y >= GROUND_Y - player.h){
+        player.y = GROUND_Y - player.h;
+        player.vy = 0;
+        player.onGround = true;
+      }
+    }
+
+    // spawn
+    spawnTimer--;
+    if (spawnTimer <= 0){
+      spawnObstacle();
+      spawnTimer = Math.max(38, 75 - speed*4);
+    }
+    orbTimer--;
+    if (orbTimer <= 0){
+      spawnOrb();
+      orbTimer = 55 + Math.random()*40;
+    }
+
+    // move obstacles
+    for (const o of obstacles) o.x -= speed;
+    obstacles = obstacles.filter(o => o.x + o.w > -10);
+
+    for (const orb of orbs) orb.x -= speed;
+    orbs = orbs.filter(o => o.x > -20);
+
+    // collisions
+    const pRect = { x: player.x+6, y: player.y+4, w: player.w-12, h: player.h-8 };
+    for (const o of obstacles){
+      if (rectsOverlap(pRect, o)){
+        die();
+        return;
+      }
+    }
+    for (const orb of orbs){
+      if (!orb.taken){
+        const dx = (player.x+player.w/2) - orb.x;
+        const dy = (player.y+player.h/2) - orb.y;
+        if (Math.sqrt(dx*dx+dy*dy) < orb.r + 16){
+          orb.taken = true;
+          score += hookActive ? 20 : 10;
+          spawnBurst(orb.x, orb.y, 8);
+        }
+      }
+    }
+    orbs = orbs.filter(o => !o.taken);
+
+    if (hookActive){
+      hookTimer--;
+      if (hookTimer <= 0) hookActive = false;
+    }
+
+    score += hookActive ? 0.4 : 0.2;
+
+    // particles
+    for (const p of particles){ p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life--; }
+    particles = particles.filter(p => p.life > 0);
+
+    scoreEl.textContent = Math.floor(score);
+  }
+
+  function die(){
+    state = 'dead';
+    best = Math.max(best, Math.floor(score));
+    bestEl.textContent = best;
+    showOverlay(
+      'Flopped',
+      'You hit a shadowban.',
+      Math.floor(score),
+      'Run Again'
+    );
+  }
+
+  function showOverlay(title, sub, statValue, btnLabel){
+    overlay.innerHTML = `
+      <div class="eyebrow">We Disrupt Arcade</div>
+      <h1>${title}</h1>
+      <p>${sub}</p>
+      ${statValue !== null ? `<div class="stat">${statValue} views this run</div>` : ''}
+      <button class="btn" id="startBtn">${btnLabel}</button>
+    `;
+    overlay.style.display = 'flex';
+    document.getElementById('startBtn').addEventListener('click', () => {
+      overlay.style.display = 'none';
+      resetGame();
+      state = 'playing';
+    });
+  }
+
+  function drawGround(){
+    ctx.fillStyle = '#0f0f0f';
+    ctx.fillRect(0, GROUND_Y, W, H-GROUND_Y);
+    ctx.strokeStyle = 'rgba(198,255,0,0.5)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, GROUND_Y); ctx.lineTo(W, GROUND_Y);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    for (let x = -40 + groundOffset; x < W; x += 40){
+      ctx.beginPath();
+      ctx.moveTo(x, GROUND_Y+10); ctx.lineTo(x-14, H);
+      ctx.stroke();
+    }
+  }
+
+  function drawPlayer(){
+    const x = player.x, y = player.y, w = player.w, h = player.h;
+    ctx.save();
+    if (hookActive){
+      ctx.shadowColor = GREEN;
+      ctx.shadowBlur = 18;
+    }
+    ctx.fillStyle = hookActive ? GREEN : '#fff';
+    // simple bolt-runner shape
+    ctx.beginPath();
+    ctx.moveTo(x+w*0.55, y);
+    ctx.lineTo(x+w, y+h*0.35);
+    ctx.lineTo(x+w*0.65, y+h*0.35);
+    ctx.lineTo(x+w*0.9, y+h);
+    ctx.lineTo(x, y+h*0.62);
+    ctx.lineTo(x+w*0.4, y+h*0.62);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawObstacle(o){
+    ctx.fillStyle = '#ff3b3b';
+    ctx.fillRect(o.x, o.y, o.w, o.h);
+    ctx.strokeStyle = '#0a0a0a';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(o.x+4, o.y+4); ctx.lineTo(o.x+o.w-4, o.y+o.h-4);
+    ctx.moveTo(o.x+o.w-4, o.y+4); ctx.lineTo(o.x+4, o.y+o.h-4);
+    ctx.stroke();
+  }
+
+  function drawOrb(o){
+    ctx.fillStyle = GREEN;
+    ctx.beginPath();
+    ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#0a0a0a';
+    ctx.font = '800 10px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('▶', o.x, o.y+1);
+  }
+
+  function drawParticles(){
+    for (const p of particles){
+      ctx.globalAlpha = Math.max(0, p.life/20);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x-2, p.y-2, 4, 4);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function render(){
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0,0,W,H);
+    drawGround();
+    for (const o of obstacles) drawObstacle(o);
+    for (const o of orbs) drawOrb(o);
+    drawPlayer();
+    drawParticles();
+  }
+
+  function loop(){
+    update();
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  // input
+  window.addEventListener('keydown', e => { if (e.code === 'Space'){ e.preventDefault(); jump(); }});
+  window.addEventListener('keyup', e => { if (e.code === 'Space') releaseJump(); });
+  canvas.addEventListener('mousedown', jump);
+  canvas.addEventListener('mouseup', releaseJump);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); jump(); }, {passive:false});
+  canvas.addEventListener('touchend', e => { e.preventDefault(); releaseJump(); }, {passive:false});
+
+  startBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    resetGame();
+    state = 'playing';
+  });
+
+  resetGame();
+  render();
+  loop();
+})();
+</script>
