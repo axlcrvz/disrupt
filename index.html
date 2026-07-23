@@ -3,812 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WE DISRUPT — Brand Scaling Through UGC</title>
+<title>WE DISRUPT — Get UGC Content That Actually Sells (Without Paying For Ads)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --black:#111111;
+    --white:#ffffff;
+    --cream:#faf9f6;
+    --green:#C6FF00;
+    --green-dark:#a3d400;
+    --red:#e0322f;
+    --gray:#5b5b5b;
+    --line:#e4e2da;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',Arial,sans-serif;
+    color:var(--black);
+    background:var(--white);
+    font-size:19px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Archivo Black','Arial Black',sans-serif;
+    line-height:1.08;
+    letter-spacing:-0.5px;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .center{text-align:center;}
 
-  :root {
-    --black: #080808;
-    --off-white: #F0EDE6;
-    --acid: #C8FF00;
-    --red: #FF2D00;
-    --mid: #1A1A1A;
-    --muted: #555;
-    --border: rgba(240,237,230,0.1);
+  /* ===== TOP URGENCY BAR ===== */
+  .topbar{
+    background:var(--black);
+    color:var(--white);
+    text-align:center;
+    font-weight:700;
+    font-size:15px;
+    padding:11px 16px;
+    letter-spacing:.3px;
   }
+  .topbar span{color:var(--green);}
 
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--off-white);
-    font-family: 'DM Mono', monospace;
-    overflow-x: hidden;
-    cursor: crosshair;
+  /* ===== NAV ===== */
+  nav{
+    border-bottom:2px solid var(--black);
+    padding:18px 0;
   }
-
-  /* ─── NOISE OVERLAY ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  /* ─── MARQUEE ─── */
-  .marquee-bar {
-    background: var(--acid);
-    color: var(--black);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.15em;
-    padding: 7px 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-  .marquee-inner {
-    display: inline-block;
-    animation: scroll-left 20s linear infinite;
-  }
-  .marquee-inner span { margin: 0 2.5rem; }
-  @keyframes scroll-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 4rem;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: rgba(8,8,8,0.92);
-    backdrop-filter: blur(12px);
-    z-index: 100;
-  }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    letter-spacing: 0.08em;
-    color: var(--off-white);
-    text-decoration: none;
-  }
-  .nav-logo em { color: var(--acid); font-style: normal; }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--acid); }
-  .nav-cta {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.1em;
-    padding: 0.5rem 1.4rem;
-    border: 1px solid var(--acid);
-    color: var(--acid);
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
-  .nav-cta:hover { background: var(--acid); color: var(--black); }
-
-  /* ─── HERO ─── */
-  .hero {
-    min-height: 88vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 0 4rem;
-    gap: 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    right: -20%;
-    top: -20%;
-    width: 70vw;
-    height: 70vw;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(200,255,0,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--acid);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .hero-label::before {
-    content: '';
-    display: block;
-    width: 28px;
-    height: 1px;
-    background: var(--acid);
-  }
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4.5rem, 8vw, 8.5rem);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    margin-bottom: 2rem;
-  }
-  .hero-title .slash { color: var(--red); }
-  .hero-title .invert {
-    -webkit-text-stroke: 1px var(--off-white);
-    color: transparent;
-  }
-  .hero-sub {
-    font-size: 0.8rem;
-    line-height: 1.8;
-    color: #888;
-    max-width: 420px;
-    margin-bottom: 3rem;
-  }
-  .hero-btns { display: flex; gap: 1rem; align-items: center; }
-  .btn-primary {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1rem;
-    letter-spacing: 0.12em;
-    padding: 0.85rem 2.5rem;
-    background: var(--acid);
-    color: var(--black);
-    border: none;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.15s;
-  }
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--black);
-    transform: translateX(-100%);
-    transition: transform 0.25s cubic-bezier(.77,0,.175,1);
-    mix-blend-mode: difference;
-  }
-  .btn-primary:hover { transform: translate(-2px,-2px); }
-  .btn-primary:hover::after { transform: translateX(0); }
-  .btn-ghost {
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color 0.2s;
-  }
-  .btn-ghost:hover { color: var(--off-white); }
-  .btn-ghost span { font-size: 1.1rem; }
-
-  /* hero right: stat stack */
-  .hero-right { position: relative; }
-  .stat-card {
-    background: var(--mid);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    margin-bottom: 1px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    opacity: 0;
-    transform: translateX(30px);
-    animation: slide-in 0.6s forwards;
-  }
-  .stat-card:nth-child(1) { animation-delay: 0.1s; }
-  .stat-card:nth-child(2) { animation-delay: 0.25s; }
-  .stat-card:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes slide-in {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3.5rem;
-    line-height: 1;
-    color: var(--off-white);
-  }
-  .stat-num em { color: var(--acid); font-style: normal; }
-  .stat-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: right;
-    max-width: 120px;
-    line-height: 1.6;
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-family:'Archivo Black',sans-serif;font-size:24px;letter-spacing:-0.5px;}
+  .logo span{color:var(--green-dark);-webkit-text-stroke:0.6px black;}
+  .nav-cta{
+    background:var(--black);color:var(--white);
+    padding:12px 24px;border-radius:6px;
+    font-weight:800;font-size:15px;text-decoration:none;
+    border:2px solid var(--black);
   }
 
-  /* ─── MARQUEE 2 ─── */
-  .marquee-bar-2 {
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 1.2rem 0;
-    overflow: hidden;
-    white-space: nowrap;
+  /* ===== BUTTON ===== */
+  .btn{
+    display:inline-block;
+    background:var(--green);
+    color:var(--black);
+    font-family:'Inter',sans-serif;
+    font-weight:900;
+    font-size:22px;
+    padding:22px 46px;
+    border-radius:8px;
+    text-decoration:none;
+    border:3px solid var(--black);
+    box-shadow:0 6px 0 var(--black);
+    transition:transform .08s ease;
+    cursor:pointer;
   }
-  .marquee-inner-2 {
-    display: inline-block;
-    animation: scroll-left 30s linear infinite;
+  .btn:hover{transform:translateY(2px);box-shadow:0 4px 0 var(--black);}
+  .btn:active{transform:translateY(6px);box-shadow:0 0 0 var(--black);}
+  .btn-sub{
+    display:block;margin-top:14px;font-size:15px;color:var(--gray);font-weight:600;
   }
-  .marquee-inner-2 span {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 0 3rem;
-  }
-  .marquee-inner-2 span.dot {
-    color: var(--red);
-    margin: 0 1rem;
-  }
-
-  /* ─── SECTION SHARED ─── */
-  section { padding: 6rem 4rem; }
-  .section-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--acid);
-    margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 5vw, 5rem);
-    line-height: 0.95;
-    margin-bottom: 1.5rem;
+  .arrow-down{
+    font-size:34px;text-align:center;margin:8px 0 0;color:var(--black);
   }
 
-  /* ─── HOW IT WORKS ─── */
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    margin-top: 4rem;
-    border: 1px solid var(--border);
+  /* ===== HERO ===== */
+  .hero{padding:70px 0 50px;background:var(--cream);border-bottom:2px solid var(--black);}
+  .eyebrow{
+    display:inline-block;background:var(--black);color:var(--green);
+    font-weight:800;font-size:14px;letter-spacing:1px;text-transform:uppercase;
+    padding:8px 16px;border-radius:30px;margin-bottom:22px;
   }
-  .how-card {
-    padding: 2.5rem;
-    border-right: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
+  .hero h1{font-size:52px;max-width:880px;margin:0 auto 20px;}
+  .hero h1 .hl{background:var(--green);padding:0 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
+  .hero .sub{font-size:22px;color:var(--gray);max-width:700px;margin:0 auto 34px;font-weight:600;}
+  .hero-video{
+    max-width:760px;margin:0 auto 30px;
+    background:var(--black);
+    border-radius:14px;
+    border:3px solid var(--black);
+    aspect-ratio:16/9;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    overflow:hidden;
   }
-  .how-card:last-child { border-right: none; }
-  .how-card:hover { background: var(--mid); }
-  .how-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem;
-    line-height: 1;
-    -webkit-text-stroke: 1px var(--border);
-    color: transparent;
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    transition: -webkit-text-stroke-color 0.3s;
+  .hero-video .playbtn{
+    width:84px;height:84px;border-radius:50%;background:var(--green);
+    display:flex;align-items:center;justify-content:center;font-size:0;
+    box-shadow:0 0 0 14px rgba(198,255,0,.18);
+    cursor:pointer;
   }
-  .how-card:hover .how-num { -webkit-text-stroke-color: rgba(200,255,0,0.3); }
-  .how-icon {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    display: block;
+  .hero-video .playbtn::after{
+    content:"";
+    border-style:solid;
+    border-width:16px 0 16px 26px;
+    border-color:transparent transparent transparent var(--black);
+    margin-left:6px;
   }
-  .how-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.03em;
+  .hero-video .cap{position:absolute;bottom:16px;left:16px;color:#bbb;font-size:13px;font-weight:600;}
+  .checks{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;
+    max-width:760px;margin:0 auto 36px;font-weight:700;font-size:17px;
   }
-  .how-card p {
-    font-size: 0.72rem;
-    line-height: 1.8;
-    color: #777;
+  .checks li{list-style:none;display:flex;align-items:center;gap:8px;}
+  .checks li::before{
+    content:"✓";background:var(--black);color:var(--green);
+    width:22px;height:22px;border-radius:50%;font-size:13px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
 
-  /* ─── SERVICES ─── */
-  .services { background: var(--mid); }
-  .services-wrap {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 6rem;
-    align-items: start;
+  /* trust bar */
+  .trustbar{padding:26px 0;border-bottom:2px solid var(--black);}
+  .trustbar p{text-align:center;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:18px;}
+  .trustbar .logos{display:flex;justify-content:center;align-items:center;gap:44px;flex-wrap:wrap;font-family:'Archivo Black',sans-serif;font-size:20px;color:#b9b6ac;}
+
+  /* ===== SECTION GENERIC ===== */
+  section{padding:70px 0;}
+  .section-title{font-size:38px;text-align:center;max-width:760px;margin:0 auto 14px;}
+  .section-sub{text-align:center;color:var(--gray);font-size:19px;max-width:640px;margin:0 auto 50px;font-weight:600;}
+  .band-cream{background:var(--cream);border-top:2px solid var(--black);border-bottom:2px solid var(--black);}
+  .band-black{background:var(--black);color:var(--white);}
+  .band-black .section-sub{color:#bdbdbd;}
+
+  /* ===== PROBLEM ===== */
+  .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:880px;margin:0 auto;}
+  .problem-card{
+    background:var(--white);border:2px solid var(--black);border-radius:12px;
+    padding:26px 24px;font-weight:700;font-size:18px;
   }
-  .services-list { margin-top: 2rem; }
-  .service-item {
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: padding-left 0.3s;
-  }
-  .service-item:hover { padding-left: 0.5rem; }
-  .service-item:hover .service-arrow { color: var(--acid); }
-  .service-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-  }
-  .service-arrow { color: var(--muted); font-size: 1.2rem; transition: color 0.2s; }
-  .services-visual {
-    position: relative;
-    height: 480px;
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .services-visual::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 39px,
-      var(--border) 39px, var(--border) 40px
-    ),
-    repeating-linear-gradient(
-      90deg, transparent, transparent 39px,
-      var(--border) 39px, var(--border) 40px
-    );
-    opacity: 0.4;
-  }
-  .services-visual-inner {
-    position: relative;
-    text-align: center;
-  }
-  .services-visual-inner .big-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 7rem;
-    line-height: 0.85;
-    -webkit-text-stroke: 1px rgba(200,255,0,0.4);
-    color: transparent;
-  }
-  .services-visual-inner .tag {
-    display: inline-block;
-    background: var(--acid);
-    color: var(--black);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    padding: 0.3rem 0.9rem;
-    margin-top: 1.5rem;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
+  .problem-card .x{
+    width:34px;height:34px;border-radius:50%;background:var(--red);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-weight:900;margin-bottom:14px;font-family:'Archivo Black',sans-serif;
   }
 
-  /* ─── CREATORS ─── */
-  .creators-section { border-top: 1px solid var(--border); }
-  .creators-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+  /* ===== STEPS ===== */
+  .steps{max-width:900px;margin:0 auto;}
+  .step{
+    display:grid;grid-template-columns:110px 1fr;gap:28px;align-items:start;
+    padding:34px 0;border-bottom:2px solid var(--line);
   }
-  .creators-header p {
-    font-size: 0.7rem;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 320px;
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Archivo Black',sans-serif;font-size:60px;color:var(--green-dark);
+    -webkit-text-stroke:2px var(--black);
+    line-height:1;
   }
-  .creators-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-  .creator-card {
-    background: var(--black);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .creator-card:hover .creator-overlay { opacity: 1; }
-  .creator-card:hover .creator-thumb-placeholder { transform: scale(1.04); }
-  .creator-thumb-placeholder {
-    width: 100%;
-    aspect-ratio: 9/16;
-    background: var(--mid);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.5s cubic-bezier(.25,.46,.45,.94);
-    position: relative;
-    overflow: hidden;
-  }
-  .creator-thumb-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      45deg, transparent, transparent 18px,
-      rgba(255,255,255,0.02) 18px, rgba(255,255,255,0.02) 19px
-    );
-  }
-  .placeholder-icon { font-size: 3rem; opacity: 0.15; position: relative; z-index: 1; }
-  .creator-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.2) 50%, transparent 100%);
-    opacity: 0.85;
-    transition: opacity 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
-  }
-  .creator-platform {
-    font-size: 0.58rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--acid);
-    margin-bottom: 0.4rem;
-  }
-  .creator-handle {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 800;
-    margin-bottom: 0.75rem;
-  }
-  .creator-views { display: flex; align-items: baseline; gap: 0.4rem; }
-  .creator-views strong {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem;
-    color: var(--off-white);
-    letter-spacing: 0.05em;
-  }
-  .views-label {
-    font-size: 0.58rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .swap-note {
-    margin-top: 1.5rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: center;
-    border: 1px dashed rgba(240,237,230,0.15);
-    padding: 0.6rem 1rem;
-  }
-  .swap-note em { color: var(--acid); font-style: normal; }
-  @media (max-width: 900px) {
-    .creators-grid { grid-template-columns: 1fr; }
-    .creator-thumb-placeholder { aspect-ratio: 16/9; }
-  }
+  .step h3{font-size:26px;margin-bottom:10px;}
+  .step p{color:var(--gray);font-size:18px;font-weight:500;}
 
-  /* ─── CTA BAND ─── */
-  .cta-band {
-    background: var(--acid);
-    color: var(--black);
-    padding: 5rem 4rem;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 3rem;
+  /* ===== OFFER STACK ===== */
+  .offer-box{
+    max-width:680px;margin:0 auto;background:var(--white);
+    border:3px solid var(--black);border-radius:16px;
+    box-shadow:0 10px 0 var(--black);
+    overflow:hidden;
   }
-  .cta-band h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    line-height: 0.9;
+  .offer-head{background:var(--black);color:var(--white);text-align:center;padding:22px;font-family:'Archivo Black',sans-serif;font-size:22px;}
+  .offer-list{padding:30px 34px 10px;}
+  .offer-item{
+    display:flex;justify-content:space-between;gap:16px;
+    padding:16px 0;border-bottom:1px dashed var(--line);font-weight:700;font-size:17px;
   }
-  .cta-band h2 span { -webkit-text-stroke: 1.5px var(--black); color: transparent; }
-  .btn-dark {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.12em;
-    padding: 1rem 2.5rem;
-    background: var(--black);
-    color: var(--acid);
-    text-decoration: none;
-    border: 2px solid var(--black);
-    white-space: nowrap;
-    transition: background 0.2s, color 0.2s;
+  .offer-item:last-child{border-bottom:none;}
+  .offer-item .val{color:var(--gray);white-space:nowrap;font-weight:800;}
+  .offer-total{
+    background:var(--cream);margin:10px 24px 26px;border-radius:10px;padding:20px;text-align:center;border:2px solid var(--black);
   }
-  .btn-dark:hover { background: transparent; color: var(--black); }
+  .offer-total .was{text-decoration:line-through;color:var(--gray);font-size:18px;font-weight:700;}
+  .offer-total .now{font-family:'Archivo Black',sans-serif;font-size:30px;color:var(--black);margin-top:4px;}
+  .offer-total .now span{color:var(--green-dark);-webkit-text-stroke:0.5px black;}
+  .offer-cta{padding:0 34px 34px;text-align:center;}
+  .offer-cta .btn{width:100%;}
 
-  /* ─── FOOTER ─── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+  /* ===== TESTIMONIALS ===== */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1040px;margin:0 auto;}
+  .test-card{
+    background:var(--white);border:2px solid var(--black);border-radius:12px;padding:26px;
   }
-  footer .foot-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: 0.08em;
+  .stars{color:var(--green-dark);font-size:18px;letter-spacing:2px;margin-bottom:12px;-webkit-text-stroke:0.4px black;}
+  .test-card p{font-size:16px;font-weight:600;color:#333;margin-bottom:18px;}
+  .test-person{display:flex;align-items:center;gap:12px;}
+  .avatar{
+    width:46px;height:46px;border-radius:50%;background:var(--green);
+    display:flex;align-items:center;justify-content:center;font-family:'Archivo Black',sans-serif;font-size:17px;flex-shrink:0;
   }
-  footer .foot-logo em { color: var(--acid); font-style: normal; }
-  footer p {
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  footer .foot-links { display: flex; gap: 2rem; }
-  footer .foot-links a {
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  footer .foot-links a:hover { color: var(--acid); }
+  .test-person .name{font-weight:800;font-size:15px;}
+  .test-person .role{font-size:13px;color:var(--gray);font-weight:600;}
 
-  /* ─── ANIMATE ON LOAD ─── */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    animation: fade-up 0.7s forwards;
+  /* ===== GUARANTEE ===== */
+  .guarantee{
+    max-width:760px;margin:0 auto;display:flex;gap:34px;align-items:center;
+    background:var(--white);border:3px solid var(--black);border-radius:16px;padding:40px;
   }
-  .fade-up.d1 { animation-delay: 0.05s; }
-  .fade-up.d2 { animation-delay: 0.2s; }
-  .fade-up.d3 { animation-delay: 0.35s; }
-  .fade-up.d4 { animation-delay: 0.5s; }
-  @keyframes fade-up {
-    to { opacity: 1; transform: translateY(0); }
+  .seal{
+    flex-shrink:0;width:130px;height:130px;border-radius:50%;
+    background:var(--green);border:3px solid var(--black);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Archivo Black',sans-serif;font-size:15px;line-height:1.15;padding:10px;
   }
+  .guarantee h3{font-size:26px;margin-bottom:10px;}
+  .guarantee p{color:var(--gray);font-weight:600;font-size:17px;}
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links { display: none; }
-    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; min-height: auto; }
-    .hero::after { display: none; }
-    section { padding: 4rem 1.5rem; }
-    .how-grid { grid-template-columns: 1fr; }
-    .how-card { border-right: none; border-bottom: 1px solid var(--border); }
-    .services-wrap { grid-template-columns: 1fr; gap: 3rem; }
-    .services-visual { height: 280px; }
-    .cta-band { grid-template-columns: 1fr; padding: 3.5rem 1.5rem; }
-    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+  /* ===== FAQ ===== */
+  .faq{max-width:760px;margin:0 auto;}
+  .faq-item{border:2px solid var(--black);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+  .faq-q{
+    width:100%;text-align:left;background:var(--white);border:none;
+    padding:20px 24px;font-family:'Inter',sans-serif;font-weight:800;font-size:18px;
+    display:flex;justify-content:space-between;align-items:center;cursor:pointer;
+  }
+  .faq-q .plus{font-family:'Archivo Black',sans-serif;font-size:24px;transition:transform .2s ease;flex-shrink:0;margin-left:16px;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--cream);}
+  .faq-a p{padding:0 24px 20px;color:var(--gray);font-weight:600;font-size:16px;}
+  .faq-item.open .faq-a{max-height:260px;}
+
+  /* ===== FINAL CTA ===== */
+  .final-cta{text-align:center;padding:80px 0;}
+  .final-cta h2{font-size:42px;max-width:760px;margin:0 auto 18px;}
+  .final-cta .sub{color:#cfcfcf;font-size:19px;max-width:600px;margin:0 auto 36px;font-weight:600;}
+
+  footer{
+    background:var(--black);color:#999;text-align:center;padding:34px 24px;font-size:14px;font-weight:600;
+  }
+  footer a{color:var(--green);text-decoration:none;font-weight:800;}
+
+  @media (max-width:760px){
+    body{font-size:17px;}
+    .hero h1{font-size:34px;}
+    .hero .sub{font-size:18px;}
+    .section-title{font-size:28px;}
+    .problem-grid{grid-template-columns:1fr;}
+    .test-grid{grid-template-columns:1fr;}
+    .guarantee{flex-direction:column;text-align:center;padding:30px 24px;}
+    .step{grid-template-columns:1fr;}
+    .step-num{font-size:40px;}
+    .nav-cta{display:none;}
   }
 </style>
 </head>
 <body>
 
-<!-- MARQUEE TOP -->
-<div class="marquee-bar" aria-hidden="true">
-  <div class="marquee-inner">
-    <span>UGC THAT CONVERTS</span><span>★</span>
-    <span>BRAND SCALING</span><span>★</span>
-    <span>CREATOR MATCHING</span><span>★</span>
-    <span>WE-DISRUPT.COM</span><span>★</span>
-    <span>UGC THAT CONVERTS</span><span>★</span>
-    <span>BRAND SCALING</span><span>★</span>
-    <span>CREATOR MATCHING</span><span>★</span>
-    <span>WE-DISRUPT.COM</span><span>★</span>
-    <span>UGC THAT CONVERTS</span><span>★</span>
-    <span>BRAND SCALING</span><span>★</span>
-    <span>CREATOR MATCHING</span><span>★</span>
-    <span>WE-DISRUPT.COM</span><span>★</span>
-  </div>
-</div>
+<div class="topbar">⏳ <span>Only 4 client slots open</span> this month — we cap rosters to protect creator quality</div>
 
-<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">WE<em>·</em>DISRUPT</a>
-  <ul class="nav-links">
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#brands">Brands</a></li>
-    <li><a href="#creators">Creators</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Work With Us</a>
+  <div class="wrap">
+    <div class="logo">WE <span>DISRUPT</span></div>
+    <a href="#apply" class="nav-cta">Book Free Strategy Call</a>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-label fade-up d1">Brand Growth Agency</div>
-    <h1 class="hero-title fade-up d2">
-      WE<br>
-      SCALE<br>
-      <span class="invert">BRANDS</span><br>
-      W/ REAL<br>
-      <span class="slash">PEOPLE</span>
-    </h1>
-    <p class="hero-sub fade-up d3">
-      We connect your brand to vetted content creators — 
-      producing authentic UGC that cuts through the noise and drives real revenue.
-    </p>
-    <div class="hero-btns fade-up d4">
-      <a href="#contact" class="btn-primary">Get Started</a>
-      <a href="#how" class="btn-ghost"><span>↓</span> See how it works</a>
-    </div>
-  </div>
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="wrap center">
+    <span class="eyebrow">Built For Startup Founders</span>
+    <h1>Stop Burning Cash On Ads That Stop Working The Day You Stop Paying. <span class="hl">Get Content That Sells For You — Organically.</span></h1>
+    <p class="sub">We hand-match your startup with proven UGC creators who make short-form videos real customers actually trust. No paid promotion required. No agency retainer.</p>
 
-  <div class="hero-right">
-    <div class="stat-card">
-      <div class="stat-num"><em>3x</em></div>
-      <div class="stat-label">Average ROAS improvement in 90 days</div>
+    <div class="hero-video">
+      <div class="playbtn"></div>
+      <div class="cap">Watch: How the WE DISRUPT content system works (2 min)</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">500<em>+</em></div>
-      <div class="stat-label">Vetted creators in our network</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num"><em>48</em>h</div>
-      <div class="stat-label">Average time to first content brief</div>
-    </div>
-  </div>
-</section>
 
-<!-- MARQUEE 2 -->
-<div class="marquee-bar-2" aria-hidden="true">
-  <div class="marquee-inner-2">
-    <span>TikTok</span><span class="dot">✦</span>
-    <span>Instagram Reels</span><span class="dot">✦</span>
-    <span>YouTube Shorts</span><span class="dot">✦</span>
-    <span>Creator Economy</span><span class="dot">✦</span>
-    <span>Authentic UGC</span><span class="dot">✦</span>
-    <span>Organic Growth</span><span class="dot">✦</span>
-    <span>Real People</span><span class="dot">✦</span>
-    <span>Brand Scaling</span><span class="dot">✦</span>
-    <span>TikTok</span><span class="dot">✦</span>
-    <span>Instagram Reels</span><span class="dot">✦</span>
-    <span>YouTube Shorts</span><span class="dot">✦</span>
-    <span>Creator Economy</span><span class="dot">✦</span>
-    <span>Authentic UGC</span><span class="dot">✦</span>
-    <span>Organic Growth</span><span class="dot">✦</span>
-    <span>Real People</span><span class="dot">✦</span>
-    <span>Brand Scaling</span><span class="dot">✦</span>
+    <ul class="checks">
+      <li>No paid ad spend needed</li>
+      <li>Vetted creator roster</li>
+      <li>Content in as little as 3 days</li>
+      <li>Built for early-stage budgets</li>
+    </ul>
+
+    <a href="#apply" class="btn">Book My Free Strategy Call →</a>
+    <span class="btn-sub">Takes 30 seconds. No credit card. No pressure.</span>
+  </div>
+</header>
+
+<div class="trustbar">
+  <div class="wrap">
+    <p>Trusted by founders building on</p>
+    <div class="logos">
+      <span>Shopify</span><span>TikTok Shop</span><span>Meta</span><span>YC</span><span>Product Hunt</span>
+    </div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="section-label">Process</div>
-  <h2 class="section-title">HOW WE<br>DISRUPT</h2>
-  <div class="how-grid">
-    <div class="how-card">
-      <div class="how-num">01</div>
-      <span class="how-icon">🎯</span>
-      <h3>Brief & Match</h3>
-      <p>You share your brand, goals, and target audience. We match you with creators whose style, tone, and niche are a perfect fit — no guessing, no wasted outreach.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">02</div>
-      <span class="how-icon">🎬</span>
-      <h3>Create & Deliver</h3>
-      <p>Creators produce authentic, platform-native content using your product. Raw, real, and built to perform — UGC the algorithm rewards.</p>
-    </div>
-    <div class="how-card">
-      <div class="how-num">03</div>
-      <span class="how-icon">📈</span>
-      <h3>Scale & Optimize</h3>
-      <p>We analyze what's resonating and double down on it. More creators, more content, more reach — all organic. Repeat until your brand is everywhere.</p>
+<!-- ===== PROBLEM ===== -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Sound familiar?</h2>
+    <p class="section-sub">You didn't start a company to become a full-time media buyer.</p>
+    <div class="problem-grid">
+      <div class="problem-card"><div class="x">✕</div>Your ad costs go up every quarter, and your margins go down.</div>
+      <div class="problem-card"><div class="x">✕</div>You've hired freelancers who ghost, miss deadlines, or hand you content that feels like an ad.</div>
+      <div class="problem-card"><div class="x">✕</div>Your competitors are all over TikTok and Instagram, and you're not sure where to start.</div>
+      <div class="problem-card"><div class="x">✕</div>You know "authentic content" works, but you don't have the time to make it yourself.</div>
     </div>
   </div>
 </section>
 
-<!-- CREATORS -->
-<section id="creators" class="creators-section">
-  <div class="creators-header">
-    <div>
-      <div class="section-label">The Network</div>
-      <h2 class="section-title">OUR<br>CREATORS</h2>
+<!-- ===== HOW IT WORKS ===== -->
+<section class="band-cream">
+  <div class="wrap">
+    <h2 class="section-title">Here's exactly how it works</h2>
+    <p class="section-sub">A simple, three-step system. No guesswork, no learning curve.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Tell us about your startup</h3>
+          <p>On your free strategy call, we learn your product, your customer, and your goals. We map out exactly what kind of content will move the needle for you.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>We match you with creators</h3>
+          <p>We hand-pick creators from our roster who already talk like your customers do. You approve every creator before anything gets made.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>You get content that sells</h3>
+          <p>Real people, real videos, real results — delivered on a schedule, ready to post organically or plug into ads whenever you're ready.</p>
+        </div>
+      </div>
     </div>
-    <p>Real people, real reach. Our creators have built audiences from scratch — no bots, no inflated numbers.</p>
+    <div class="arrow-down">↓</div>
+    <p class="center" style="font-weight:800;font-size:18px;margin-top:6px;">That's it. No 40-page brand decks.</p>
   </div>
-  <div class="creators-grid">
-
-    <!-- Creator 1 -->
-    <div class="creator-card">
-      <div class="creator-thumb-placeholder">
-        <span class="placeholder-icon">🎬</span>
-      </div>
-      <div class="creator-overlay">
-        <div class="creator-platform">TikTok</div>
-        <div class="creator-handle">@marlowe.creates</div>
-        <div class="creator-views">
-          <strong>4.2M</strong>
-          <span class="views-label">views</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Creator 2 -->
-    <div class="creator-card">
-      <div class="creator-thumb-placeholder">
-        <span class="placeholder-icon">🎬</span>
-      </div>
-      <div class="creator-overlay">
-        <div class="creator-platform">Instagram</div>
-        <div class="creator-handle">@siennaxo</div>
-        <div class="creator-views">
-          <strong>2.8M</strong>
-          <span class="views-label">views</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Creator 3 -->
-    <div class="creator-card">
-      <div class="creator-thumb-placeholder">
-        <span class="placeholder-icon">🎬</span>
-      </div>
-      <div class="creator-overlay">
-        <div class="creator-platform">YouTube Shorts</div>
-        <div class="creator-handle">@reyesvisuals</div>
-        <div class="creator-views">
-          <strong>6.1M</strong>
-          <span class="views-label">views</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="swap-note">↑ Placeholder screenshots — <em>swap with real video thumbnails</em> when ready</div>
 </section>
 
-<!-- CTA BAND -->
-<div class="cta-band" id="contact">
-  <h2>READY TO<br><span>DISRUPT</span><br>YOUR NICHE?</h2>
-  <a href="mailto:hello@we-disrupt.com" class="btn-dark">Let's Talk →</a>
-</div>
+<!-- ===== OFFER STACK ===== -->
+<section id="offer">
+  <div class="wrap">
+    <h2 class="section-title">What you get when you work with us</h2>
+    <p class="section-sub">Everything is built for startups — not big-brand budgets.</p>
+    <div class="offer-box">
+      <div class="offer-head">The WE DISRUPT Starter Package</div>
+      <div class="offer-list">
+        <div class="offer-item"><span>Dedicated creator matching</span><span class="val">Included</span></div>
+        <div class="offer-item"><span>Daily batch of short-form UGC videos</span><span class="val">Included</span></div>
+        <div class="offer-item"><span>Content usage rights for your channels</span><span class="val">Included</span></div>
+        <div class="offer-item"><span>Performance check-in call</span><span class="val">Included</span></div>
+        <div class="offer-item"><span>Access to our creator community &amp; playbook</span><span class="val">Included</span></div>
+      </div>
+      <div class="offer-total">
+        <div class="was">Agency retainer elsewhere: $4,000+/mo</div>
+        <div class="now">Your price: <span>Custom to your stage</span></div>
+      </div>
+      <div class="offer-cta">
+        <a href="#apply" class="btn">Get My Free Strategy Call →</a>
+        <span class="btn-sub">We'll quote you honestly, based on your budget — not a sales script.</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- FOOTER -->
+<!-- ===== TESTIMONIALS ===== -->
+<section class="band-cream">
+  <div class="wrap">
+    <h2 class="section-title">Founders are already seeing it work</h2>
+    <p class="section-sub">We only win when your content actually performs.</p>
+    <div class="test-grid">
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"We cut our paid ad budget almost in half and our sign-ups didn't drop. The content just kept working after we stopped paying for reach."</p>
+        <div class="test-person">
+          <div class="avatar">M</div>
+          <div><div class="name">Maya R.</div><div class="role">Founder, D2C skincare startup</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"I tried freelance creators for a year with no process. WE DISRUPT gave us a system. Content shows up on time, every month."</p>
+        <div class="test-person">
+          <div class="avatar">D</div>
+          <div><div class="name">David K.</div><div class="role">Co-founder, SaaS startup</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="stars">★★★★★</div>
+        <p>"Our first video from their roster outperformed every paid ad we ran last quarter. It didn't feel like an ad — that's the whole point."</p>
+        <div class="test-person">
+          <div class="avatar">P</div>
+          <div><div class="name">Priya S.</div><div class="role">Founder, app startup</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GUARANTEE ===== -->
+<section>
+  <div class="wrap">
+    <div class="guarantee">
+      <div class="seal">30-DAY<br>FIT<br>GUARANTEE</div>
+      <div>
+        <h3>Try it. If it's not a fit, you're not stuck.</h3>
+        <p>If within your first 30 days you don't feel the creator match and content quality is right for your startup, we'll make it right or part ways — no long contracts, no hard feelings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="band-cream">
+  <div class="wrap">
+    <h2 class="section-title">Questions founders usually ask</h2>
+    <p class="section-sub">&nbsp;</p>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q">Do I need a marketing team to do this? <span class="plus">+</span></button>
+        <div class="faq-a"><p>No. We built this specifically for founders who don't have one yet. We handle creator sourcing, briefing, and delivery — you just review and approve.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How is this different from running paid ads? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Paid ads stop the moment you stop paying. Organic UGC content keeps earning views, trust, and sign-ups long after it's posted — and you can always repurpose it into ads later.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How fast can we get our first content? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Most startups see their first batch of content within 14 days of our strategy call, depending on creator matching and your product's shipping timeline.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What if we're pre-revenue or very early stage? <span class="plus">+</span></button>
+        <div class="faq-a"><p>That's exactly who we built this for. We'll be upfront on the call about whether it's the right time for you, even if that means waiting a bit.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="final-cta band-black" id="apply">
+  <div class="wrap">
+    <h2>Ready to get content that sells, without the ad spend?</h2>
+    <p class="sub">Book your free strategy call. We'll tell you honestly whether we're the right fit for your startup — no pitch, no pressure.</p>
+    <a href="#" class="btn">Book My Free Strategy Call →</a>
+    <span class="btn-sub" style="color:#bbb;">Only 4 client slots open this month.</span>
+  </div>
+</section>
+
 <footer>
-  <div class="foot-logo">WE<em>·</em>DISRUPT</div>
-  <p>© 2025 we-disrupt.com — Brand Scaling Through UGC</p>
-  <div class="foot-links">
-    <a href="#">Instagram</a>
-    <a href="#">TikTok</a>
-    <a href="#">LinkedIn</a>
-    <a href="mailto:hello@we-disrupt.com">Contact</a>
+  <div class="wrap">
+    WE DISRUPT — UGC content for startups that'd rather grow organically. &nbsp;·&nbsp;
+    <a href="#apply">Book a call</a>
   </div>
 </footer>
 
 <script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-      if (el.isIntersecting) {
-        el.target.style.opacity = '1';
-        el.target.style.transform = 'translateY(0)';
-      }
+  document.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.faq-item');
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(function(el){ el.classList.remove('open'); });
+      if(!wasOpen){ item.classList.add('open'); }
     });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.how-card, .creator-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
   });
 </script>
+
 </body>
 </html>
